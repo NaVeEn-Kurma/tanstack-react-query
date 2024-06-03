@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { ReactQueryDevtools } from "react-query/devtools";
-import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import Navbar from "./components/NavBar";
 import Home from "./components/Home";
@@ -20,7 +21,7 @@ const App = () => {
             <Route path="/users" element={<Users />} />
           </Routes>
         </div>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom" />
       </div>
     </QueryClientProvider>
   );
