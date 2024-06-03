@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchUsers = async () => {
@@ -18,14 +18,17 @@ const updateUser = async (updatedUser) => {
 function Users() {
   const queryClient = useQueryClient();
 
-  const { data, error, isLoading, isFetching } = useQuery("users", fetchUsers, {
-    staleTime: 1000 * 60, // 1 minute
-    cacheTime: 1000 * 60 * 10,
+  const { data, error, isLoading, isFetching } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+    staleTime: (1000 * 60) / 2, // 30 seconds
+    gcTime: 1000 * 60 * 2,
   });
 
-  const mutation = useMutation(updateUser, {
+  const mutation = useMutation({
+    mutationFn: updateUser,
     onSuccess: () => {
-      queryClient.invalidateQueries("users");
+      queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
 
